@@ -9,7 +9,7 @@ namespace config
 {
     public abstract class DataBaseConfig
     {
-        SqlConnection conexion;
+        protected SqlConnection conexion;
         SqlCommand command;
         SqlDataReader data;
 
@@ -18,11 +18,9 @@ namespace config
             try
             {
                 //poner este config en un properties
-                string cnnString = @"data source=DESKTOP-GHUBDR4\SQLEXPRESS;initial catalog=master;trusted_connection=true";
-
+                //string cnnString = @"data source=DESKTOP-GHUBDR4\SQLEXPRESS;initial catalog=master;trusted_connection=true";
+                string cnnString = @"data source=localhost\SQLEXPRESS;initial catalog=master;trusted_connection=true";
                 conexion = new SqlConnection(cnnString);
-
-                
             }
 
             catch(Exception ex)
@@ -36,9 +34,10 @@ namespace config
         {
             try
             {
+    
                 conexion.Open();
 
-                sql = "use [ecommerce-plataforma]; select * from usuarios ";
+               // sql = "use [ecommerce-plataforma]; select * from usuarios ";
                 Console.WriteLine("conexion establecida");
 
 
@@ -49,8 +48,8 @@ namespace config
                 data = command.ExecuteReader();
 
 
-
-                conexion.Close();
+           
+              
             }
             catch (Exception ex)
             {
