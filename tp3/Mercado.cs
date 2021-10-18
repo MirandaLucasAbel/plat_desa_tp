@@ -121,20 +121,23 @@ namespace tp1
                             flag = true;
                             break;
                         }
-                        else
-                        {
-                            Console.WriteLine("El id es invalido");
-                            break;
-                        }
-
                     }
                 return flag;
                 }
 
         internal double calcularCompra(int idUsuario)
         {
-            return usuarios[idUsuario].MiCarro.calcularTotal();
-        }
+            double total = 0;
+            for (var i = 0; i < usuarios.Count(); i++)
+            {
+                if (usuarios[i].id == idUsuario)
+                {
+                    total = usuarios[i].MiCarro.calcularTotal();
+                    break;
+                }
+            }
+            return total;
+            }
 
         public List<Producto> buscarProductos(string query) // ORDENADO POR NOMBRE LOS PRODUCTOS QUE CONTIENEN EN SU NOMBRE LA CADENA INGRESADA
             {
@@ -434,7 +437,12 @@ namespace tp1
 
             try
             {
+                if (getProductoById(id_Producto).cantidad >= cantidad) { 
                 usuario.MiCarro.agregarProducto(getProductoById(id_Producto), cantidad);
+                } else
+                {
+                    flag = false;
+                }
             }
             catch(Exception ex)
             {

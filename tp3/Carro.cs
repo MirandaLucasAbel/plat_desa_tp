@@ -34,7 +34,22 @@ namespace tp1
             return true;
         }
         public bool sacarProductos(Producto producto, int cantidad) {
-            foreach (KeyValuePair<Producto, int> prod in productos)
+            if (productos.ContainsKey(producto))
+            {
+                if (productos[producto] <= cantidad)
+                {
+                    productos.Remove(producto);
+                }
+                else
+                {
+                    productos[producto] -= cantidad;
+                }
+                return true;
+            }
+            else
+                return false;
+
+            /*foreach (KeyValuePair<Producto, int> prod in productos)
             {
                 if (prod.Key == producto) {
                     if (prod.Value <= cantidad)
@@ -48,19 +63,28 @@ namespace tp1
                     return true;
                 }
             }
-            return false;
+            return false;*/
         }
 
         private Producto buscarProducto(Producto producto)
         {
-            foreach (KeyValuePair<Producto, int> prod in productos)
+            if (productos.ContainsKey(producto))
+            {
+                return producto;
+            }
+            return null;
+
+
+
+            /*foreach (KeyValuePair<Producto, int> prod in productos)
             {
                 if (prod.Key == producto)
                 {
                     return prod.Key;
                 }
             }
-            return null;
+            return null;*/
+
         }
         public void mostrarTodosLosProductos()
         {
