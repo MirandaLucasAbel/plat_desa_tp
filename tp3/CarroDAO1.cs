@@ -27,7 +27,7 @@ namespace Slc_Mercado
                 string sql = $"use[ecommerce - plataforma]; select id from { tabla}; ";
                 SqlDataReader data = ejecutarQuery(sql);
 
-                Carro carro = null;
+                //Carro carro = null;
                 int id;
                 //VER QUE OTROS CAMPOS TIENE
 
@@ -35,8 +35,8 @@ namespace Slc_Mercado
                 {
                     id = Int32.Parse(data.GetValue(0).ToString());
 
-                    carro = new Carro(id);
-                    carro.Add(carro);
+                    //carro = new Carro(id);
+                   // carro.Add(carro);
                 }
             }
             catch (Exception ex)

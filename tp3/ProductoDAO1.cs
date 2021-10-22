@@ -43,7 +43,7 @@ namespace dao
                     cantidad = Int32.Parse(data.GetValue(3).ToString());
                     categoria = (data.GetValue(4).ToString());
 
-                    producto = new Producto(id, nombre, precio, cantidad, categoria);
+                    producto = new Producto(id, nombre, precio, cantidad, null);// categoria); //revisar
                     productos.Add(producto);
                 }
             }
@@ -66,6 +66,7 @@ namespace dao
 
             try
             {
+                Categoria categoria = null; //revisar
                 string sql = $"use[ecommerce - plataforma]; insert into {tabla} (nombre, precio, cantidad, categoria) values ('{nombre}','{precio}','{cantidad}','{categoria}');";
                 SqlDataReader data = ejecutarQuery(sql);
 
