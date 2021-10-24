@@ -13,8 +13,6 @@ namespace dao
 	public class UsuarioDAO1 : DataBaseConfig
 	{
 	
-		
-		static string fileName = Path.Combine(LocalFileManager.userpath, "Usuario.json");
 		private string tabla = "usuarios";
 
 		public UsuarioDAO1()
@@ -65,6 +63,52 @@ namespace dao
 			conexion.Close();
 			return usuario;
 
+		}
+
+		public Usuario getUsuarioByDni(int dni,string password)
+        {
+
+			string sql = $"use [ecommerce-plataforma]; select id,nombre,apellido,dni,mail,password,tipo,cuil from {tabla} where id = {dni.ToString()} and password = {password};";
+			SqlDataReader data = ejecutarQuery(sql);
+
+			Usuario usuario = null;
+			int id;
+			string nombre;
+			string apellido;
+			//int dni;
+			string mail;
+			//string password;
+			string tipo;
+			string cuil;
+
+			while (data.Read())
+			{
+				/*Console.WriteLine(data.GetValue(0));
+				Console.WriteLine(data.GetValue(1));
+				Console.WriteLine(data.GetValue(2));
+				Console.WriteLine(data.GetValue(3));
+				Console.WriteLine(data.GetValue(4));
+				Console.WriteLine(data.GetValue(5));
+				Console.WriteLine(data.GetValue(6));
+				Console.WriteLine(data.GetValue(7));
+		
+				Console.WriteLine("------------");
+				*/
+
+				id = Int32.Parse(data.GetValue(0).ToString());
+				nombre = (data.GetValue(1).ToString());
+				apellido = (data.GetValue(2).ToString());
+				dni = Int32.Parse(data.GetValue(3).ToString());
+				mail = (data.GetValue(4).ToString());
+				password = (data.GetValue(5).ToString());
+				tipo = data.GetValue(6).ToString();
+				cuil = data.GetValue(7).ToString();
+
+
+				usuario = new Usuario(id, dni, nombre, apellido, mail, password, tipo, cuil);
+			}
+			conexion.Close();
+			return usuario;
 		}
 
 		public  List<Usuario> getAll()

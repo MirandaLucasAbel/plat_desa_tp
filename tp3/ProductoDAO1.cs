@@ -25,7 +25,7 @@ namespace dao
 
             try
             {
-                string sql = $"use[ecommerce - plataforma]; select id, nombre, precio, cantidad, categoria from { tabla}; ";
+                string sql = $"use[ecommerce - plataforma]; select id, nombre, precio, cantidad, categoria from { tabla}; "; //revisar agregar id de categoria y nombre de categoria
                 SqlDataReader data = ejecutarQuery(sql);
 
                 Producto producto = null;
@@ -34,6 +34,7 @@ namespace dao
                 double precio;
                 int cantidad;
                 string categoria; //como pasar categoria de tp1. el id? el nombre?
+                Categoria categ;
 
                 while (data.Read())
                 {
@@ -43,7 +44,9 @@ namespace dao
                     cantidad = Int32.Parse(data.GetValue(3).ToString());
                     categoria = (data.GetValue(4).ToString());
 
-                    producto = new Producto(id, nombre, precio, cantidad, null);// categoria); //revisar
+                    categ = new Categoria(id, nombre); //revisar
+
+                    producto = new Producto(id, nombre, precio, cantidad, categ);// categoria); //revisar
                     productos.Add(producto);
                 }
             }
@@ -60,14 +63,14 @@ namespace dao
             return productos;
         }
 
-        public bool insert(string nombre, double precio, int cantidad /*categoria*/)
+        public bool insert(string nombre, double precio, int cantidad, int id_categoria)
         {
             bool flag = true;
 
             try
             {
-                Categoria categoria = null; //revisar
-                string sql = $"use[ecommerce - plataforma]; insert into {tabla} (nombre, precio, cantidad, categoria) values ('{nombre}','{precio}','{cantidad}','{categoria}');";
+
+                string sql = $"use[ecommerce - plataforma]; insert into {tabla} (nombre, precio, cantidad, categoria) values ('{nombre}','{precio}','{cantidad}','{id_categoria}');";
                 SqlDataReader data = ejecutarQuery(sql);
 
             }
