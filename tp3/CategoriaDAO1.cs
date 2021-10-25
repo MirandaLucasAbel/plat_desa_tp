@@ -11,7 +11,6 @@ namespace dao
 {
     class CategoriaDAO1 : DataBaseConfig
     {
-        static string fileName = Path.Combine(LocalFileManager.userpath, "Categoria.json");
         private string tabla = "categorias";
 
         public CategoriaDAO1()
@@ -54,19 +53,26 @@ namespace dao
             return categorias;
         }
 
-        public void saveALL (List<Categoria> categoria)
+        public bool insert(Categoria categoria)
         {
-            
-            try
-            {
-                File.WriteAllText(fileName, JsonConvert.SerializeObject(categoria));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw new Exception("ocurrio un error al guardar los datos");
-            }
-            
+            return false;
+        }
+
+        public bool update(Categoria categoria)
+        {
+            return false;
+        }
+
+        public bool delete(int id)
+        {
+            return false;
+        }
+
+        public bool saveAll (List<Categoria> categoria)
+        {
+
+
+            return false;
         }
 
 

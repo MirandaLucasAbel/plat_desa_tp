@@ -53,6 +53,27 @@ namespace Slc_Mercado
 
         }
 
+        public Carro getByUserId(int userId)
+        {
+            Carro carro = new Carro();
+            return carro;
+        }
+
+        public bool insert(Carro carro)
+        {
+            return false;
+        }
+
+        public bool update(Carro carro)
+        {
+            return false;
+        }
+
+        public bool delete(int id)
+        {
+            return false;
+        }
+
         public void saveAll (List<Carro> carro)
         {
             try
