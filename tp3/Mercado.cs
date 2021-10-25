@@ -11,208 +11,156 @@ namespace tp1
     public class Mercado
     {
 
-       public const int MAX_CATEGORIAS  = 5;
-       public int cantCategorias { get; set; }
 
-       public List<Categoria> categorias= new List<Categoria>();
+       private List<Categoria> categorias;
 
-       public List<Producto> productos = new List<Producto>();
+        private List<Producto> productos;
 
-       public List<Usuario> usuarios = new List<Usuario>();     
+        private List<Usuario> usuarios;
 
-       public List<Compra> compras ;
+        private Usuario usuario;
 
-            public Mercado()
+        private Carro carro;
+
+        private List<Compra> compras ;
+
+       private CategoriaDAO1 categoriaDao;
+        private ProductoDAO1 productoDao;
+        private UsuarioDAO1 usuarioDao;
+        private CompraDAO1 compradao;
+
+        public Mercado()
             {
-
-
+            /*no es necesario iniciar esto*/
             this.productos = ProductoDAO.getAll();
             this.categorias = CategoriaDAO.getAll();
             this.usuarios = UsuarioDAO.getAll();
-            this.compras = new List<Compra>(); 
+            this.compras = new List<Compra>();
+
+            /*daos*/
+             this.categoriaDao = new CategoriaDAO1();
+            this.compradao = new CompraDAO1();
+            this.usuarioDao = new UsuarioDAO1();
+            this.productoDao = new ProductoDAO1();
+            
 
             foreach (Usuario us in usuarios) us.MiCarro = new Carro();
 
         }
 
-        internal string mostrarCarro(int idUsuario)
+        public List<Producto> getProductos()
         {
-            return usuarios[idUsuario].MiCarro.toString();
+            return this.productoDao.getAll();
         }
 
-        internal int cantidadArticulos(int idUsuario)
+        internal List<Producto> getProductosActivos()
         {
-            return usuarios[idUsuario].MiCarro.cantidadArticulos();
+            return this.productoDao.getActivos();
+        }
+
+        internal List<Compra> getCompras()
+        {
+            return this.compradao.getAll();
+        }
+
+        internal List<Usuario> getUsuarios()
+        {
+            return this.usuarioDao.getAll();
+        }
+
+        internal List<Categoria> getCategorias()
+        {
+            return this.categoriaDao.getAll();
+        }
+
+        internal string mostrarCarro()
+        {
+           return  this.usuario.MiCarro.toString(); 
+        }
+
+        internal int cantidadArticulos()
+        {
+            return this.usuario.MiCarro.cantidadArticulos();
         }
 
         public bool agregarProducto (string nombre, double precio, int cantidad, int id_Categoria)
             {
-                int idActual = 0;
-                foreach (Producto prod in productos)
-                {
-                    if (prod.id > idActual) { idActual = prod.id; }
-                }
-                try
-                {
-                    this.productos.Add(new Producto(idActual +1,nombre, precio, cantidad, this.categorias[id_Categoria]));
-                    ProductoDAO.saveAll(productos);
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Ocurrio un error al intentar dar de alta el producto, por favor intente nuevamente");
-                    return false;
-                }
+
+           bool flag = this.productoDao.insert(nombre, precio, cantidad, id_Categoria);
+            
+            return flag;
             }
 
 
         public bool modificarProducto(int id, string nombre, double precio, int cantidad, int id_Categoria)
         {
-            int indice = 0;
-            foreach (Producto prod in productos)
-            {
-                if (prod.id == id)
-                {
-                    if (!(string.IsNullOrEmpty(nombre)))
-                        {
-                        prod.nombre = nombre;
-                    }
-                    if (precio > 0)
-                    {
-                        prod.precio = precio;
-                    }
-                    if (cantidad > 0)
-                    {
-                        prod.cantidad = cantidad;
-                    }
-                    if (id_Categoria >= 0 ) 
-                   {
-                        prod.cat.id= id_Categoria;
-                    }
-                    productos[indice] = new Producto(id, nombre, precio, cantidad, buscarCategoria(id_Categoria));
-                    ProductoDAO.saveAll(productos);
-                    return true;
-                }
-                indice++;
-            }
-            return false;
+
+            bool flag = this.productoDao.update(id, nombre, precio, cantidad, id_Categoria);
+            return flag;
         }
 
         public Categoria buscarCategoria(int id)
         {
-            foreach(Categoria cat in categorias)
-            {
-                if(cat!=null && cat.id==id)
-                {
-                    return cat;
-                }
-            }
-            return null;
+            return categoriaDao.get(id);
         }
-                public bool eliminarProducto (int id) { 
-                    bool flag = false;
-                    int indice;
-                    for (var i = 0; i<productos.Count(); i++)
-                    {
-                        if (productos[i] != null && productos[i].id == id)
-                        {
-                             indice = productos.IndexOf(productos[i]);
-                            productos.RemoveAt(indice);
-                            flag = true;
-                            break;
-                        }
-                    }
-                return flag;
+                public bool eliminarProducto (int id) {
+            return this.productoDao.delete(id);
                 }
 
         internal double calcularCompra(int idUsuario)
         {
-            double total = 0;
-            for (var i = 0; i < usuarios.Count(); i++)
-            {
-                if (usuarios[i].id == idUsuario)
-                {
-                    total = usuarios[i].MiCarro.calcularTotal();
-                    break;
-                }
-            }
+            double total = this.usuario.MiCarro.calcularTotal();
+        
             return total;
-            }
+         }
 
-        public List<Producto> buscarProductos(string query) // ORDENADO POR NOMBRE LOS PRODUCTOS QUE CONTIENEN EN SU NOMBRE LA CADENA INGRESADA
+        public List<Producto> buscarProductos(string query) 
             {
-                List<Producto> productoPorNombre = new List<Producto>();
-                foreach(Producto pr in productos)
-                {
-                    if (pr.nombre.Contains(query))
-                    {
-                    productoPorNombre.Add(pr);
-                    }
-                }
+            List<Producto> productoPorNombre = productoDao.getByName(query);
+
             return productoPorNombre;
             }
 
 
             public List<Producto> buscarProductosPorPrecio (string query) //ORDENADO POR PRECIO DE MENOR A MAYOR LOS PRODUCTOS QUE CONTIENEN EN SU NOMBRE LA CADENA INGRESADA
             {
-                IEnumerable<Producto> aux = productos.OrderBy(pr => pr.precio);
-                List<Producto> listProductos = aux.ToList();
+
+            List<Producto> listProductos = productoDao.getByPrice(query);
                 return listProductos;
             }
 
 
             public List<Producto> buscarProductosPorCategoria (int id_Categoria) //ORDENADO POR NOMBRE LOS PRODUCTOS QUE PERTENCEN A LA CATEGORIA CON EL ID INGRESADO
             {
-                List<Producto> listProd = new List<Producto>();
-                foreach (Producto pr in productos)
-                {
-                    if(pr.cat.id == id_Categoria)
-                    {
-                        listProd.Add(pr);
-                    }   
-                }
-            listProd = listProd.OrderBy(pr => pr.nombre).ToList();
+            List<Producto> listProd = productoDao.getbyCateg(id_Categoria);
+                
                 
             return listProd;
             }
 
-        public Producto buscarProductoPorNombre(string id_Nombre) //ORDENADO POR NOMBRE LOS PRODUCTOS QUE PERTENCEN A LA CATEGORIA CON EL ID INGRESADO
+        public Producto buscarProductoPorNombre(string nombre) //ORDENADO POR NOMBRE LOS PRODUCTOS QUE PERTENCEN A LA CATEGORIA CON EL ID INGRESADO
         {
-            foreach (Producto pr in productos)
-            {
-                if (pr.nombre == id_Nombre)
-                {
-                    return pr;
-                }
-            }
-            return null;
+            return productoDao.getAllByName(nombre);
         }
 
 
         public bool agregarUsuario (int dni, string nombre, string apellido, string mail, string password, string cuit_Cuil, string tipo)
             {
-                //calcular id
-                //(int id, int cuit, int dni, string nombre, string mail, string password)
-                //int id, int cuit, int dni, string nombre, string mail, string password
-                Usuario us;
-                int idActual = 0;
+                
             // int erroresDeIngreso = verificarIngresoUsuario(idActual, dni, nombre, apellido, mail, password, cuit_Cuil, tipo); //descomentar
             int erroresDeIngreso = 0;
-                foreach (Usuario user in usuarios)
-                {
-                
-                    if (user.id > idActual) { idActual = user.id; }
-                }
+               
                 if (erroresDeIngreso > 0)
                 {
                 Console.WriteLine("usted tiene " + erroresDeIngreso + " errores que solucionar antes de poder crear su usuario");
+                return false;
                 }
 
-            us = new Usuario(idActual + 1, dni, nombre, apellido, mail, password, cuit_Cuil, tipo);
-            usuarios.Add(us);
-            UsuarioDAO.saveAll(usuarios);
+         
 
-            return true;
+            bool flag = this.usuarioDao.insert(nombre, apellido, password, dni, mail, tipo, cuit_Cuil);
+
+            return flag;
             }
 
 
@@ -228,23 +176,14 @@ namespace tp1
             }
             else
             {
-                int index = 0;
-                foreach(Usuario us in usuarios)
-                {
-                    if(us!=null && us.id == id)
-                    {
-                        usuarios[index] = new Usuario(id, dni, nombre, apellido, mail, password, tipo, cuit_Cuil);
-                        UsuarioDAO.saveAll(usuarios);
-                        break;
-                    }
-                    index++;
-                }
+                bool flag = this.usuarioDao.update(id,  dni,  nombre,  apellido,  mail,  password,  cuit_Cuil,  tipo);
             }
             return true;
         }
 
         private int verificarIngresoUsuario(int id, int dni, string nombre, string apellido, string mail, string password, string cuit_Cuil, string tipo)
         {
+            //revisar
             int contadorErrores = 0;
             foreach (Usuario us in usuarios)
             {
@@ -317,92 +256,37 @@ namespace tp1
 
             public bool eliminarUsuario (int id)
             {
-                bool flag = false;
-                int indice = 0;
-            foreach (Usuario us in usuarios)
-            {
-                if(us!=null && us.id == id)
-                {
-                    flag = true;
-                    usuarios.RemoveAt(indice);
-                    UsuarioDAO.saveAll(usuarios);
-                    break;
-                }
-                indice++;
-            }
+            bool flag = this.usuarioDao.delete(id);
             return flag;
             }
 
-            public List<Usuario> mostrarUsuarios () // MUESTRA TODOS LOS USUARIOS ORDENADOS POR DNI
+            public List<Usuario> mostrarUsuarios () 
             {
                 usuarios = usuarios.OrderBy(o  =>  o.dni).ToList();
                 return usuarios;     
-            /*foreach(Usuario us in usuario)
-                {
-                    Console.WriteLine(us.toString());
-                }*/
+            
             }
  
             public bool agregarCategoria (string nombre)
             {
-                int idActual = 0;
-                foreach (Categoria cat in categorias)
-                {
-                    if (cat.id > idActual) { idActual = cat.id; }
-                }
-                try
-                {
-                    this.categorias.Add(new Categoria(idActual + 1, nombre));
-                CategoriaDAO.saveAll(categorias);
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Ocurrio un error al intentar dar de alta la categoria, por favor intente nuevamente");
-                    return false;
-                }
+            return this.categoriaDao.insert(nombre);
             }
             //private int verificarEspacio
 
             public bool modificarCategoria (int id, string nombre)
             {
-                foreach (Categoria cat in categorias)
-                {
-                    if (cat.id == id)
-                    {
-                        if (!(string.IsNullOrEmpty(nombre)))
-                        {
-                            cat.nombre = nombre;
-                        }
-                    CategoriaDAO.saveAll(categorias);
-                        return true;
-                    }
-
-                }
-                return false;
+            return this.categoriaDao.update(id, nombre);
             }
 
 
             public bool eliminarCategoria (int id)
             {
-            bool flag = false;
-            int indice = 0;
-            foreach (Categoria cat in categorias)
-            {
-                if (cat != null && cat.id == id)
-                {
-                    categorias.RemoveAt(indice);
-                    CategoriaDAO.saveAll(categorias);
-                    flag = true;
-                }
-                indice++;
-            }
-            return flag;
+            return categoriaDao.delete(id);
       
         }
 
 
-            public List<Categoria> mostrarCategorias() //MAL EN EL ENUNCIADO PERO MOSTRAR TODOS LAS CATEGORIAS ORDENADAS POR ID
+            public List<Categoria> mostrarCategorias()
             {
             categorias = categorias.OrderBy(o => o.id).ToList();
             return categorias;
@@ -433,7 +317,7 @@ namespace tp1
             public bool agregarAlCarro (int id_Producto, int cantidad, int id_Usuario){
                 bool flag = true;
 
-            Usuario usuario = getUsuario(id_Usuario);
+           
 
             try
             {
@@ -484,16 +368,6 @@ namespace tp1
         }
 
 
-        public List<string> getListaNombreCategorias()
-        {
-            List<string> lista = new List<string>();
-            foreach(Categoria cat in categorias)
-            {
-                lista.Add(cat.nombre);
-            }
-
-            return lista;
-        }
 
         public List<Producto> buscarProductosPorNombre(string nombre)
         {
@@ -528,7 +402,7 @@ namespace tp1
             public bool comprar(int id_Usuario){
             bool flag = false;
             int idActual=0;
-            Usuario usuario = getUsuario(id_Usuario);
+           
             if (checkCarrito(usuario.MiCarro.productos))
             {
                 List<Producto> productos = ProductoDAO.getAll();
@@ -605,13 +479,7 @@ namespace tp1
         }
 
 
-        public bool comprar2(int id_usuario)
-        {
-            Usuario usuario = getUsuario(id_usuario);
-            //foreach()
-
-                return false;
-        }
+      
 
        
 
@@ -700,23 +568,30 @@ namespace tp1
                 return -1;
         }
 
-        public bool esAdmin(int idUsuario)
+        public bool iniciarSesion1(int dni,string pass)
         {
-            Usuario user = getUsuario(idUsuario);
-            if (user.tipo == "admin")
+            UsuarioDAO1 usuarioDao = new UsuarioDAO1();
+            this.usuario = usuarioDao.getUsuarioByDni(dni, pass);
+            if (this.usuario != null)
             {
+                this.carro = new Carro();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
 
-            //List<Usuario> usuarios = UsuarioDAO.getAll();
-            //foreach (Usuario us in usuarios)
-            //{
-              //  if (us.id == idUsuario ) return us.tipo;
-            //}
+
+        }
+
+
+
+        public bool esAdmin()
+        {
+            return this.usuario.tipo == "admin";
+        }
+
+        public  Usuario getUsuario()
+        {
+            return this.usuario;
         }
 
         public Usuario getUsuario(int id)

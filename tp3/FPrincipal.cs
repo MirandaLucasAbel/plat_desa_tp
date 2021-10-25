@@ -17,7 +17,7 @@ namespace Slc_Mercado
         FAdmin hijoMain;
         FUser hijoMain2;
         internal string texto;
-        Usuario usuario;
+        Mercado mercado;
         bool logued;
         public bool touched;
         public FPrincipal()
@@ -33,18 +33,17 @@ namespace Slc_Mercado
             touched = false;
 
         }
-        private void TransfDelegado(Usuario usuario)
+        private void TransfDelegado(Mercado mercado)
         {
-            Mercado mercado = new Mercado();
-            this.usuario = usuario;
-            if (usuario != null && usuario.nombre != "")
+            this.mercado = mercado;
+            if (mercado.getUsuario() != null && mercado.getUsuario().nombre != "")
             {
-                MessageBox.Show("Log-in correcto, Usuario: " + usuario.nombre);
+                MessageBox.Show("Log-in correcto, Usuario: " + mercado.getUsuario().nombre);
                 hijoLogin.Close();
 
-                if (mercado.esAdmin(usuario.id))// CONDICION TEMPORAL TENDRÍA QUE VER SI EL USUARIO ES ADMIN O NO - AHORA SOLO SIRVE SI EL USUARIO SE LLAMA ADMIN
+                if (mercado.esAdmin())
                 {
-                    hijoMain = new FAdmin(usuario);
+                    hijoMain = new FAdmin(mercado);
                     hijoMain.MdiParent = this;
                     hijoMain.Show();
                 }

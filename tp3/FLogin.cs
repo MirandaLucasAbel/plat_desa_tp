@@ -17,7 +17,7 @@ namespace Slc_Mercado
         private bool logued;
         private string[] argumentos;
         private Usuario usuario;
-        public delegate void TransfDelegado(Usuario usuario);
+        public delegate void TransfDelegado(Mercado mercado);
         public TransfDelegado TrasfEvento;
         public FLogin(string[] args)
         {
@@ -27,10 +27,9 @@ namespace Slc_Mercado
         }
         private void login_Click(object sender, EventArgs e)
         {
-            //cargar todos los usurios y revisar si existe el user ingresado
-            //List<Usuario> usuarios = UsuarioDAO.getAll();
 
-            Boolean loginOK = false;
+
+           
             Mercado mercado = new Mercado();
 
 
@@ -40,16 +39,15 @@ namespace Slc_Mercado
             
                 if (dniOK &&  pass.Text!="")
                 {
-                int idUser = mercado.iniciarSesion(dni_, pass.Text);
+                 mercado.iniciarSesion1(dni_, pass.Text);
                 //encontron al usuario
-                loginOK = idUser != -1;
-                usuario = mercado.getUsuario(idUser);
+
                 }
             
 
-            if (loginOK && usuario!=null)
+            if (mercado.getUsuario()!=null)
             {
-                this.TrasfEvento(usuario);
+                this.TrasfEvento(null);
                 this.Close();
             }
             else

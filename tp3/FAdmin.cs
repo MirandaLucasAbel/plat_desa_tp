@@ -26,19 +26,19 @@ namespace Slc_Mercado
         public Mercado mercado;
 
 
-        public FAdmin(Usuario usuario)
+        public FAdmin(Mercado mercado)
         {
             mercado = new Mercado();
 
             // TODO llamarlos desde mercado no desde formulario 
-            productos = ProductoDAO.getAll();
-            categorias = CategoriaDAO.getAll();
-            usuarios = UsuarioDAO.getAll();
-            compras = CompraDAO.getAllText();
+            productos = mercado.getProductos();
+            categorias = mercado.getCategorias();
+            usuarios = mercado.getUsuarios();
+            compras = mercado.getCompras();
 
             InitializeComponent();
             //argumentos = args;   VERIFICAR
-            label2.Text = usuario.nombre;
+            label2.Text = mercado.getUsuario().nombre;
             datos = new List<List<string>>();
             columnas = new List<string>();
 
@@ -46,11 +46,10 @@ namespace Slc_Mercado
 
         private void refreshData(List<List<string>> objData, List<string> columnas)
         {
-
-            productos = ProductoDAO.getAll();
-            categorias = CategoriaDAO.getAll();
-            usuarios = UsuarioDAO.getAll();
-            compras = CompraDAO.getAllText();
+            productos = mercado.getProductos();
+            categorias = mercado.getCategorias();
+            usuarios = mercado.getUsuarios();
+            compras = mercado.getCompras();
 
             //borro los 
             tabla.Rows.Clear();

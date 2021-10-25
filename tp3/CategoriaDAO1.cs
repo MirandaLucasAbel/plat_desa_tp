@@ -53,12 +53,12 @@ namespace dao
             return categorias;
         }
 
-        public bool insert(Categoria categoria)
+        public bool insert(string categoria)
         {
             return false;
         }
 
-        public bool update(Categoria categoria)
+        public bool update(int id,string nombre)
         {
             return false;
         }
@@ -75,7 +75,9 @@ namespace dao
             return false;
         }
 
-
-
+        internal Categoria get(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

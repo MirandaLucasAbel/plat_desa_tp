@@ -200,12 +200,12 @@ namespace dao
 				
         }
 
-		public bool update(Usuario usuario)
+		public bool update(int id, int dni, string nombre, string apellido, string mail, string password, string cuit_Cuil, string tipo)
 		{
 			bool flag = true;
 			try
 			{
-				string sql = $"use [ecommerce-plataforma]; update usuarios set nombre = '{usuario.nombre}', apellido = '{usuario.apellido}', dni = {usuario.dni},mail = '{usuario.mail}',password = '{usuario.password}', tipo='{usuario.tipo}',cuil = '{usuario.cuilCuit}' where id = {usuario.id};";
+				string sql = $"use [ecommerce-plataforma]; update usuarios set nombre = '{nombre}', apellido = '{apellido}', dni = {dni},mail = '{mail}',password = '{password}', tipo='{tipo}',cuil = '{cuit_Cuil}' where id = {id};";
 				SqlDataReader data = ejecutarQuery(sql);
 
 

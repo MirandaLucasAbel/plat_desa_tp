@@ -161,7 +161,7 @@ namespace Slc_Mercado
                 mercado.agregarAlCarro(id_producto, cantidadProd, idUsuario);
 
                 textBox1.Text = mercado.calcularCompra(idUsuario).ToString();
-                button1.Text = "Ver carrito (" + mercado.cantidadArticulos(idUsuario).ToString() + ")";
+                button1.Text = "Ver carrito (" + mercado.cantidadArticulos() + ")";
             }
             catch(Exception ex)
             {

@@ -63,6 +63,11 @@ namespace dao
             return productos;
         }
 
+        internal List<Producto> getActivos()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool insert(string nombre, double precio, int cantidad, int id_categoria)
         {
             bool flag = true;
@@ -86,12 +91,12 @@ namespace dao
             return flag;
         }
 
-        public bool update(Producto producto)
+        public bool update(int id, string nombreProd,double precioProd, int cantProd,int idCateg )
         {
             bool flag = true;
             try
             {
-                string sql = $"use[ecommerce - plataforma]; update productos set nombre = '{producto.nombre}', precio = '{producto.precio}', cantidad = '{producto.cantidad}', categoria = '{producto.cat}' where id = '{producto.id};";
+                string sql = $"use[ecommerce - plataforma]; update productos set nombre = '{nombreProd}', precio = '{precioProd}', cantidad = '{cantProd}', categoria = '{idCateg}' where id = '{id};";
                 SqlDataReader data = ejecutarQuery(sql);
 
                 ejecutarQuery(sql);
@@ -106,6 +111,21 @@ namespace dao
                 conexion.Close();
             }
             return flag;
+        }
+
+        internal List<Producto> getByPrice(string query)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal List<Producto> getByName(string query)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal List<Producto> getbyCateg(int id_Categoria)
+        {
+            throw new NotImplementedException();
         }
 
         public bool delete (int id)
@@ -129,6 +149,11 @@ namespace dao
                 conexion.Close();
             }
             return flag;
+        }
+
+        internal Producto getAllByName(string nombre)
+        {
+            throw new NotImplementedException();
         }
 
         public void saveAll (List<Producto> producto)
