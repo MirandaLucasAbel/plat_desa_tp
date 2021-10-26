@@ -36,7 +36,7 @@ namespace Slc_Mercado
         {
             //leer archivo de usuarios //TODO encriptar en algun momento
 
-            List<Usuario> usuarios = UsuarioDAO.getAll();
+           
 
             //agregar usuario al array temporal
             int id = 0;
@@ -49,12 +49,17 @@ namespace Slc_Mercado
             Carro MiCarro = null;
 
             if (validar())
-                usuarios.Add(new Usuario(id, dni, nombre, apellido, mail, password, tipoUsuario.SelectedItem.ToString(), cuit.Text));
+            {
+
+                UsuarioDAO1 dao = new UsuarioDAO1();
+                dao.insert(nombre, apellido, password, dni, mail, tipoUsuario.SelectedItem.ToString(), cuit.Text);
+            }
+           
             else return;
 
             //guardar
 
-            UsuarioDAO.saveAll(usuarios);
+           
 
             MessageBox.Show("Usuario registrado con exito");
             this.Close();

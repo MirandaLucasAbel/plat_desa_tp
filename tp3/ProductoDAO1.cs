@@ -25,7 +25,7 @@ namespace dao
 
             try
             {
-                string sql = $"use [ecommerce-plataforma]; select p.id, p.nombre, precio, cantidad, c.id, c.nombre from { tabla}  p inner join categorias c on p.id_categoria = c.id; "; //revisar agregar id de categoria y nombre de categoria
+                string sql = $"use [ecommerce-plataforma]; select p.id, p.nombre, precio, cantidad, c.id, c.nombre from { tabla}  p inner join categorias c on p.id_categoria = c.id; "; 
                 SqlDataReader data = ejecutarQuery(sql);
 
                 Producto producto = null;
@@ -76,7 +76,7 @@ namespace dao
             try
             {
 
-                string sql = $"use[ecommerce - plataforma]; insert into {tabla} (nombre, precio, cantidad, categoria) values ('{nombre}','{precio}','{cantidad}','{id_categoria}');";
+                string sql = $"use [ecommerce-plataforma]; insert into {tabla} (nombre, precio, cantidad, id_categoria) values ('{nombre}','{precio}','{cantidad}','{id_categoria}');";
                 SqlDataReader data = ejecutarQuery(sql);
 
             }
