@@ -73,6 +73,7 @@ public class CompraDAO
 	{
 		List<List<string>> compraText = new List<List<string>>();
 		Random rnd = new Random();
+		
 		foreach (Compra comp in compra)
         {
 			int id = rnd.Next(0, 9999); //generar autoincremental con la base

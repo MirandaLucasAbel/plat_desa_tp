@@ -49,7 +49,7 @@ namespace Slc_Mercado
                 }
                 else
                 {
-                    hijoMain2 = new FUser(usuario);
+                    hijoMain2 = new FUser(mercado);
                     hijoMain2.MdiParent = this;
                     hijoMain2.Show();
                 }

@@ -20,14 +20,14 @@ namespace Slc_Mercado
         Usuario usuario;
 
 
-        public FUser(Usuario usuario)
+        public FUser(Mercado mercado)
         {
 
             productos = ProductoDAO.getAll();
             mercado = new Mercado();
             InitializeComponent();
             //argumentos = args;   VERIFICAR
-            label2.Text = usuario.nombre;
+            label2.Text = mercado.getUsuario().nombre;
             datos = new List<List<string>>();
 
             cargarProductos();
@@ -39,7 +39,7 @@ namespace Slc_Mercado
         {
             int idUsuario = 0;
 
-            string message = mercado.mostrarCarro(idUsuario);
+            string message = "revisar mercado mostrar"; // mercado.mostrarCarro(idUsuario); //revisar
             string caption = "Desea confirmar la compra?";
             MessageBoxButtons buttons = MessageBoxButtons.YesNo;
             DialogResult result;

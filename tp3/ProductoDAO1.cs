@@ -156,17 +156,6 @@ namespace dao
             throw new NotImplementedException();
         }
 
-        public void saveAll (List<Producto> producto)
-        {
-            try
-            {
-                File.WriteAllText(fileName, JsonConvert.SerializeObject(producto));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw new Exception("ocurrio un error al guardar los datos");
-            }
-        }
+       
     }
 }

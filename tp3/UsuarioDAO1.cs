@@ -249,19 +249,11 @@ namespace dao
 
 		}
 
-		public  void saveAll(List<Usuario> usuario)
+		public  bool saveAll(List<Usuario> usuario)
 		{
-			try
-			{
-				File.WriteAllText(fileName, JsonConvert.SerializeObject(usuario));
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-				throw new Exception("ocurrio un error al guardar los datos");
-			}
 
-
+			//revisar
+			return false;
 		}
 
 	}

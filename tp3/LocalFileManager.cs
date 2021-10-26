@@ -31,19 +31,7 @@ namespace config
             //test
             UsuarioDAO1 us = new UsuarioDAO1();
             // us.ejecutarQuery("select * from usuarios");
-            try
-            {
-                us.getUserById(5);
-                var usuarios = us.getAll();
-                us.delete(5);
-               Usuario aux = new Usuario (6, 0000, "admin", "admin", "admin@gmail.com", "admin", "admin", "000");
-                us.update(aux);
-                us.insert("1231241", "1234123", "pass", 1234, "mail", "admin", "1234");
-            }
-            catch(Exception ex)
-            {
-
-            }
+       
        
 
         }
