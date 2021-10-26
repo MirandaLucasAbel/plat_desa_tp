@@ -19,6 +19,53 @@ namespace dao
         {
         }
 
+        public Producto get(int id)
+        {
+            Producto producto;
+
+            try
+            {
+                string sql = $"use [ecommerce-plataforma]; select p.id, p.nombre, precio, cantidad, c.id, c.nombre from { tabla}  p inner join categorias c on p.id_categoria = c.id where p.id = {id}; ";
+                SqlDataReader data = ejecutarQuery(sql);
+
+               
+                string nombre;
+                double precio;
+                int cantidad;
+                int categoria;
+                string nombreCateg;
+                Categoria categ;
+
+                while (data.Read())
+                {
+                    id = Int32.Parse(data.GetValue(0).ToString());
+                    nombre = (data.GetValue(1).ToString());
+                    precio = Double.Parse(data.GetValue(2).ToString());
+                    cantidad = Int32.Parse(data.GetValue(3).ToString());
+                    categoria = Int32.Parse(data.GetValue(4).ToString());
+                    nombreCateg = (data.GetValue(5).ToString());
+
+
+                    categ = new Categoria(id, nombreCateg); //revisar
+
+                    producto = new Producto(id, nombre, precio, cantidad, categ);// categoria); //revisar
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("archivo no encontrado");
+                productos = null;
+            }
+
+            finally
+            {
+                conexion.Close();
+            }
+
+            return productos;
+        }
+
         public List<Producto> getAll()
         {
             List<Producto> productos = new List<Producto>();
@@ -157,6 +204,9 @@ namespace dao
             throw new NotImplementedException();
         }
 
-       
+        internal int getCantidad(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

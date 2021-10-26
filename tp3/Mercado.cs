@@ -316,10 +316,7 @@ namespace tp1
            
 
             public bool agregarAlCarro (int id_Producto, int cantidad, int id_Usuario){
-                bool flag = true;
-
-           
-
+             bool flag = true;
             try
             {
                 if (getProductoById(id_Producto).cantidad >= cantidad) { 
@@ -331,6 +328,7 @@ namespace tp1
             }
             catch(Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 flag = false;
             }
             
@@ -422,12 +420,7 @@ namespace tp1
         //pasar al dao
         public Producto getProductoById(int id)
         {
-            List<Producto> prodcutos = ProductoDAO.getAll();
-            foreach (Producto prod in productos)
-            {
-                if (prod.id == id) return prod;
-            }
-            return null;
+            return productoDao.getCantidad(id);
         }
 
 
