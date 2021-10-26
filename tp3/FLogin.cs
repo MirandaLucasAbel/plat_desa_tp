@@ -47,7 +47,7 @@ namespace Slc_Mercado
 
             if (mercado.getUsuario()!=null)
             {
-                this.TrasfEvento(null);
+                this.TrasfEvento(mercado);
                 this.Close();
             }
             else

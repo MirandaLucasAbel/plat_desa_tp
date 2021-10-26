@@ -28,6 +28,7 @@ namespace tp1
         private ProductoDAO1 productoDao;
         private UsuarioDAO1 usuarioDao;
         private CompraDAO1 compradao;
+        private CarroDAO1 carroDao;
 
         public Mercado()
             {
@@ -383,17 +384,8 @@ namespace tp1
             return aux;
         }
         public bool vaciarCarro (int id_Usuario){
-            bool flag = false;
-                for (var i = 0; i < usuarios.Count(); i++){
-                if(usuarios[i].id == id_Usuario ) {
-
-                    usuarios[i].MiCarro = new Carro(id_Usuario);
-                    flag = true;
-                    break;
-
-                   }
-                }
-
+            this.usuario.MiCarro = new Carro();
+            bool flag = carroDao.delete(id_Usuario);
             return flag;
             }
           
@@ -586,7 +578,7 @@ namespace tp1
 
         public bool esAdmin()
         {
-            return this.usuario.tipo == "admin";
+            return this.usuario.tipo.Trim() == "admin";
         }
 
         public  Usuario getUsuario()

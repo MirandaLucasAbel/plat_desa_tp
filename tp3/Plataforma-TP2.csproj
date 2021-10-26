@@ -52,6 +52,7 @@
     <Compile Include="Carro.cs" />
     <Compile Include="CarroDAO1.cs" />
     <Compile Include="CategoriaDAO1.cs" />
+    <Compile Include="CompraDAO1.cs" />
     <Compile Include="DatabaseConfig.cs" />
     <Compile Include="CompraDAO.cs" />
     <Compile Include="CategoriaDAO.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="FConfigurar.Designer.cs">
       <DependentUpon>FConfigurar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Functions1.cs" />
     <Compile Include="FUser.cs">
       <SubType>Form</SubType>
     </Compile>

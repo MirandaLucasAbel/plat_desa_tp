@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tp1;
+using dao;
 
 namespace Slc_Mercado
 {
@@ -16,15 +17,14 @@ namespace Slc_Mercado
         public string[] argumentos;
         List<List<string>> datos;
         public List<Producto> productos;
-        Mercado mercado;
-        Usuario usuario;
+        private Mercado mercado;
 
 
         public FUser(Mercado mercado)
         {
 
-            productos = ProductoDAO.getAll();
-            mercado = new Mercado();
+            productos = new ProductoDAO1().getAll();
+            this.mercado = mercado;
             InitializeComponent();
             //argumentos = args;   VERIFICAR
             label2.Text = mercado.getUsuario().nombre;
@@ -134,7 +134,7 @@ namespace Slc_Mercado
             int idUsuario = 0;
             //usuario.id = 0; //sacar esto
             //mercado.vaciarCarro(usuario.id);
-            mercado.vaciarCarro(0);
+            mercado.vaciarCarro(this.mercado.getUsuario().id);
             textBox1.Text = mercado.calcularCompra(idUsuario).ToString();
             MessageBox.Show("Carrito vaciado con exito");
         }

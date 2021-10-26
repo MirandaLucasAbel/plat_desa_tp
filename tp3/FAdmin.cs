@@ -28,7 +28,7 @@ namespace Slc_Mercado
 
         public FAdmin(Mercado mercado)
         {
-            mercado = new Mercado();
+            this.mercado = mercado;
 
             // TODO llamarlos desde mercado no desde formulario 
             productos = mercado.getProductos();

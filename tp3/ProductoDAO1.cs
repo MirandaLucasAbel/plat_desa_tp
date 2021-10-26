@@ -13,7 +13,7 @@ namespace dao
     {
 
         static string fileName = Path.Combine(LocalFileManager.userpath, "Producto.json");
-        private string tabla = "productos";
+        private string tabla = "producto";
 
         public ProductoDAO1()
         {
@@ -25,7 +25,7 @@ namespace dao
 
             try
             {
-                string sql = $"use[ecommerce - plataforma]; select id, nombre, precio, cantidad, categoria from { tabla}; "; //revisar agregar id de categoria y nombre de categoria
+                string sql = $"use [ecommerce-plataforma]; select p.id, p.nombre, precio, cantidad, c.id, c.nombre from { tabla}  p inner join categorias c on p.id_categoria = c.id; "; //revisar agregar id de categoria y nombre de categoria
                 SqlDataReader data = ejecutarQuery(sql);
 
                 Producto producto = null;
@@ -53,6 +53,7 @@ namespace dao
             catch (Exception ex)
             {
                 Console.WriteLine("archivo no encontrado");
+                productos = null;
             }
 
             finally

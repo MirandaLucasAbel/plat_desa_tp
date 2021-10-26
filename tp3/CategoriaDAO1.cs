@@ -24,7 +24,7 @@ namespace dao
 
             try
             {
-                string sql = $"use[ecommerce - plataforma]; select id, nombre from { tabla}; ";
+                string sql = $"use [ecommerce-plataforma]; select id, nombre from { tabla}; ";
                 SqlDataReader data = ejecutarQuery(sql);
 
                 Categoria categoria = null;
@@ -55,29 +55,119 @@ namespace dao
 
         public bool insert(string categoria)
         {
-            return false;
+            
+            bool flag = true;
+
+            try
+            {
+
+                string sql = $"use [ecommerce-plataforma]; insert into categorias(nombre) values('{categoria}');";
+                SqlDataReader data = ejecutarQuery(sql);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                flag = false;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            return flag;
         }
 
         public bool update(int id,string nombre)
         {
-            return false;
+            bool flag = true;
+
+            try
+            {
+
+                string sql = $"use [ecommerce-plataforma]; update categorias set nombre = '{nombre}' where id = {id}";
+                SqlDataReader data = ejecutarQuery(sql);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                flag = false;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            return flag;
         }
 
         public bool delete(int id)
         {
-            return false;
+    
+            bool flag = true;
+
+            try
+            {
+
+                string sql = $"use[ecommerce-plataforma]; delete from categorias where id = {id}";
+                SqlDataReader data = ejecutarQuery(sql);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                flag = false;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            return flag;
         }
 
-        public bool saveAll (List<Categoria> categoria)
+        public bool saveAll (List<Categoria> categorias)
         {
 
+            bool flag = true;
+            foreach(Categoria c in categorias)
+            {
+                flag = flag && insert(c.nombre);
+            }
 
-            return false;
+            return true;
         }
 
         internal Categoria get(int id)
         {
-            throw new NotImplementedException();
+
+            Categoria categoria = null;
+            try
+            {
+                string sql = $"use[ecommerce - plataforma]; select id, nombre from { tabla}; ";
+                SqlDataReader data = ejecutarQuery(sql);
+
+             
+                string nombre;
+
+                while (data.Read())
+                {
+                    id = Int32.Parse(data.GetValue(0).ToString());
+                    nombre = (data.GetValue(1).ToString());
+
+                    categoria = new Categoria(id, nombre);
+ 
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Archivo no encontrado");
+            }
+
+            finally
+            {
+                conexion.Close();
+            }
+
+            return categoria;
         }
     }
 }

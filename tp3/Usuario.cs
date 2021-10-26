@@ -30,6 +30,10 @@ namespace tp1
             this.MiCarro = new Carro();
         }
 
+        public Usuario()
+        {
+        }
+
         public string toString()
         {
             return "Usuario: " + this.id + " - Dni " + this.dni + " - Nombre " + this.nombre + " - Apellido " + this.apellido + " - Mail " + this.mail + " - Cuil/Cuit:" + this.cuilCuit + " - Tipo de Usuario:" + this.tipo; // " - Carro :" + MiCarro.toString();

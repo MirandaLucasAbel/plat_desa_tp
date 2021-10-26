@@ -67,47 +67,60 @@ namespace dao
 
 		public Usuario getUsuarioByDni(int dni,string password)
         {
+			Usuario usuario = new Usuario();
+			try
+            {
+				string sql = $"use [ecommerce-plataforma]; select id,nombre,apellido,dni,mail,password,tipo,cuil from {tabla} where dni = {dni.ToString()} and password = '{password}';";
+				SqlDataReader data = ejecutarQuery(sql);
 
-			string sql = $"use [ecommerce-plataforma]; select id,nombre,apellido,dni,mail,password,tipo,cuil from {tabla} where id = {dni.ToString()} and password = {password};";
-			SqlDataReader data = ejecutarQuery(sql);
+				
+				int id;
+				string nombre;
+				string apellido;
+				//int dni;
+				string mail;
+				//string password;
+				string tipo;
+				string cuil;
 
-			Usuario usuario = null;
-			int id;
-			string nombre;
-			string apellido;
-			//int dni;
-			string mail;
-			//string password;
-			string tipo;
-			string cuil;
+				while (data.Read())
+				{
+					/*Console.WriteLine(data.GetValue(0));
+					Console.WriteLine(data.GetValue(1));
+					Console.WriteLine(data.GetValue(2));
+					Console.WriteLine(data.GetValue(3));
+					Console.WriteLine(data.GetValue(4));
+					Console.WriteLine(data.GetValue(5));
+					Console.WriteLine(data.GetValue(6));
+					Console.WriteLine(data.GetValue(7));
 
-			while (data.Read())
-			{
-				/*Console.WriteLine(data.GetValue(0));
-				Console.WriteLine(data.GetValue(1));
-				Console.WriteLine(data.GetValue(2));
-				Console.WriteLine(data.GetValue(3));
-				Console.WriteLine(data.GetValue(4));
-				Console.WriteLine(data.GetValue(5));
-				Console.WriteLine(data.GetValue(6));
-				Console.WriteLine(data.GetValue(7));
-		
-				Console.WriteLine("------------");
-				*/
+					Console.WriteLine("------------");
+					*/
 
-				id = Int32.Parse(data.GetValue(0).ToString());
-				nombre = (data.GetValue(1).ToString());
-				apellido = (data.GetValue(2).ToString());
-				dni = Int32.Parse(data.GetValue(3).ToString());
-				mail = (data.GetValue(4).ToString());
-				password = (data.GetValue(5).ToString());
-				tipo = data.GetValue(6).ToString();
-				cuil = data.GetValue(7).ToString();
+					id = Int32.Parse(data.GetValue(0).ToString());
+					nombre = (data.GetValue(1).ToString());
+					apellido = (data.GetValue(2).ToString());
+					dni = Int32.Parse(data.GetValue(3).ToString());
+					mail = (data.GetValue(4).ToString());
+					password = (data.GetValue(5).ToString());
+					tipo = data.GetValue(6).ToString();
+					cuil = data.GetValue(7).ToString();
 
 
-				usuario = new Usuario(id, dni, nombre, apellido, mail, password, tipo, cuil);
+					usuario = new Usuario(id, dni, nombre, apellido, mail, password, tipo, cuil);
+				}
 			}
-			conexion.Close();
+			catch(Exception ex)
+            {
+				Console.WriteLine(ex.Message);
+				usuario = null;
+            }
+            finally
+            {
+				conexion.Close();
+			}
+			
+			
 			return usuario;
 		}
 
@@ -160,13 +173,15 @@ namespace dao
 			}
 			catch (Exception ex)
 			{
-
+				/*
 				//en caso de no haber datos se genera un admin y se guarda en el archivo
 				Console.WriteLine("archivo no encontrado, se inicializa un objeto vacio para productos");
 				usuarios = new List<Usuario>();
 				usuarios.Add(new Usuario(0, 0000, "admin", "admin", "admin@gmail.com", "admin", "admin", "000"));
 				usuarios.Add(new Usuario(1, 0001, "cliente", "cliente", "cliente@gmail.com", "cliente", "cliente", "001"));
 				saveAll(usuarios);
+				*/
+				usuarios = null;
 			}
             finally
             {
