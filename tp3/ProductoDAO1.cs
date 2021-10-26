@@ -21,7 +21,7 @@ namespace dao
 
         public Producto get(int id)
         {
-            Producto producto;
+            Producto producto = null;
 
             try
             {
@@ -55,7 +55,7 @@ namespace dao
             catch (Exception ex)
             {
                 Console.WriteLine("archivo no encontrado");
-                productos = null;
+                producto = null;
             }
 
             finally
@@ -63,7 +63,7 @@ namespace dao
                 conexion.Close();
             }
 
-            return productos;
+            return producto;
         }
 
         public List<Producto> getAll()
