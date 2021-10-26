@@ -385,6 +385,7 @@ namespace tp1
         }
         public bool vaciarCarro (int id_Usuario){
             this.usuario.MiCarro = new Carro();
+            carroDao = new CarroDAO1();
             bool flag = carroDao.delete(id_Usuario);
             return flag;
             }
@@ -392,50 +393,9 @@ namespace tp1
         
         
             public bool comprar(int id_Usuario){
-            bool flag = false;
-            int idActual=0;
-           
-            if (checkCarrito(usuario.MiCarro.productos))
-            {
-                List<Producto> productos = ProductoDAO.getAll();
-
-                foreach (KeyValuePair<Producto, int> prod in usuario.MiCarro.productos)
-                {
-                    //poco performante pero se optimiza cuando pasemos a sql
-                   foreach(Producto stock in productos)
-                    {
-                        if (stock.id == prod.Key.id) stock.cantidad -= prod.Value;
-                    }
 
 
-                }
-
-                ProductoDAO.saveAll(productos);
-            }
-            else
-            {
-                return false;
-            }
-
-
-            //revisar despues
-            for (var i = 0; i < usuarios.Count(); i++)
-            {
-                if (usuarios[i].id == id_Usuario) {
-                       
-                        foreach (Compra comp in compras)
-                        {
-                        if (comp.id > idActual) { idActual = comp.id; }
-                        }
-                    List<List<String>> comprasAux = CompraDAO.getAllText();
-                    compras.Add(new Compra(idActual +1, usuarios[i],usuarios[i].MiCarro.productos));
-                    //comprasAux.Add(new Compra(idActual + 1, usuarios[i], usuarios[i].MiCarro.productos));
-                    CompraDAO.saveAllText(compras);
-                        flag = true;
-                        break;
-
-                }
-            }
+            bool flag = compradao.insert(id_Usuario, this.usuario.MiCarro);
 
                 return flag;
             }

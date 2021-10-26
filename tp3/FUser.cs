@@ -37,7 +37,7 @@ namespace Slc_Mercado
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int idUsuario = 0;
+            int idUsuario = mercado.getUsuario().id;
 
             string message = "revisar mercado mostrar"; // mercado.mostrarCarro(idUsuario); //revisar
             string caption = "Desea confirmar la compra?";
