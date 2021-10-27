@@ -40,7 +40,7 @@ namespace Slc_Mercado
             
                 if (dniOK &&  pass.Text!="")
                 {
-                loginOK =  mercado.iniciarSesion1(dni_, pass.Text);
+                loginOK =  mercado.iniciarSesion(dni_, pass.Text);
                 //encontron al usuario
 
                 }

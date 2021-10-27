@@ -489,22 +489,15 @@ namespace tp1
             }
 
 
-        public int iniciarSesion(int dni,string pass)
-        {
-            foreach (Usuario us in usuarios)
-            {
-                if (us.dni == dni && us.password == pass) return us.id;
-            }
-                return -1;
-        }
 
-        public bool iniciarSesion1(int dni,string pass)
+
+        public bool iniciarSesion(int dni,string pass)
         {
             UsuarioDAO1 usuarioDao = new UsuarioDAO1();
             this.usuario = usuarioDao.getUsuarioByDni(dni, pass);
             if (this.usuario != null)
             {
-                this.carro = new Carro();
+               if(esAdmin()) this.carro = new Carro(); //si no es admin no necesito iniciar un carrito
                 return true;
             }
             return false;
@@ -526,12 +519,7 @@ namespace tp1
 
         public Usuario getUsuario(int id)
         {
-            foreach (Usuario us in usuarios)
-            {
-                if (us.id == id) return us;
-            }
-
-            return null;
+            return this.usuarioDao.getUserById(id);
         }
     }
 }
