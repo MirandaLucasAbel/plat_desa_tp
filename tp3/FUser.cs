@@ -39,7 +39,7 @@ namespace Slc_Mercado
         {
             int idUsuario = mercado.getUsuario().id;
 
-            string message = "revisar mercado mostrar"; // mercado.mostrarCarro(idUsuario); //revisar
+            string message = mercado.mostrarCarro(); 
             string caption = "Desea confirmar la compra?";
             MessageBoxButtons buttons = MessageBoxButtons.YesNo;
             DialogResult result;

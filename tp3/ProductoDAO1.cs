@@ -80,7 +80,7 @@ namespace dao
                 string nombre;
                 double precio;
                 int cantidad;
-                string categoria; //como pasar categoria de tp1. el id? el nombre?
+                int categoria;
                 Categoria categ;
 
                 while (data.Read())
@@ -89,17 +89,18 @@ namespace dao
                     nombre = (data.GetValue(1).ToString());
                     precio = Double.Parse(data.GetValue(2).ToString());
                     cantidad = Int32.Parse(data.GetValue(3).ToString());
-                    categoria = (data.GetValue(4).ToString());
+                    categoria = Int32.Parse(data.GetValue(4).ToString());
+                    string nombreCateg = data.GetValue(5).ToString();
 
-                    categ = new Categoria(id, nombre); //revisar
+                    categ = new Categoria(categoria, nombreCateg);
 
-                    producto = new Producto(id, nombre, precio, cantidad, categ);// categoria); //revisar
+                    producto = new Producto(id, nombre, precio, cantidad, categ);
                     productos.Add(producto);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("archivo no encontrado");
+                Console.WriteLine(ex.Message);
                 productos = null;
             }
 

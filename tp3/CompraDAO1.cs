@@ -52,6 +52,7 @@ public class CompraDAO1 : DataBaseConfig
                 total = carro.calcularTotal();
                 string sql = $"use [ecommerce-plataforma]; insert into {tabla}(id_usuario,id_producto,cantidad,total) values({id_usuario},{id_producto},{cantidad},{total});";
                 SqlDataReader data = ejecutarQuery(sql);
+                conexion.Close();
 
             }
            

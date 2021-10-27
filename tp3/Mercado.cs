@@ -420,7 +420,7 @@ namespace tp1
         //pasar al dao
         public Producto getProductoById(int id)
         {
-            return productoDao.getCantidad(id);
+            return productoDao.get(id);
         }
 
 
