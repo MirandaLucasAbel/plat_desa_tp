@@ -95,9 +95,9 @@ public class CompraDAO1 : DataBaseConfig
         double total;
         try
         {
-            foreach (KeyValuePair<Producto, int> kvp in carro.productos)
+            foreach (KeyValuePair<int, int> kvp in carro.productos)
             {
-                id_producto = kvp.Key.id;
+                id_producto = kvp.Key;
                 cantidad = kvp.Value;
                 total = carro.calcularTotal();
                 string sql = $"use [ecommerce-plataforma]; insert into {tabla}(id_usuario,id_producto,cantidad,total) values({id_usuario},{id_producto},{cantidad},{total});";

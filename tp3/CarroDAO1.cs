@@ -59,36 +59,97 @@ namespace Slc_Mercado
             return carro;
         }
 
-        public bool insert(Carro carro)
+        public bool insert(int id_usuario, int id_producto, int cantidad)
         {
-            return false;
-        }
+            bool flag = true;
 
-        public bool update(Carro carro)
-        {
-            return false;
-        }
-
-        public bool delete(int id)
-        {
-            return false;
-        }
-
-        public void saveAll (List<Carro> carro)
-        {
             try
             {
-                File.WriteAllText(fileName, JsonConvert.SerializeObject(carro));
+
+                string sql = $"use [ecommerce-plataforma]; insert into carro(id_usuario,id_producto,cantidad) values({id_usuario},{id_producto},{cantidad});";
+                SqlDataReader data = ejecutarQuery(sql);
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                throw new Exception("ocurrio un error al guardar los datos");
+                flag = false;
             }
+            finally
+            {
+                conexion.Close();
+            }
+            return flag;
         }
 
+        public bool update(int id_usuario, int id_producto, int cantidad)
+        {
+  
+            bool flag = true;
 
+            try
+            {
 
+                string sql = $"use [ecommerce-plataforma];update carro set cantidad = {cantidad} where id_usuario = {id_usuario} and id_producto = {id_producto}";
+                SqlDataReader data = ejecutarQuery(sql);
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                flag = false;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            return flag;
+        }
+
+        public bool delete(int id)
+        {
+            bool flag = true;
+
+            try
+            {
+
+                string sql = $"use [ecommerce-plataforma];delete from carro where id_usuario = {id}";
+                SqlDataReader data = ejecutarQuery(sql);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                flag = false;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            return flag;
+        }
+
+        internal void deleteProducto(object id_usuario, object id_producto)
+        {
+            bool flag = true;
+
+            try
+            {
+
+                string sql = $"use [ecommerce-plataforma];delete from carro where id_usuario = {id_usuario} and id_producto = {id_producto}";
+                SqlDataReader data = ejecutarQuery(sql);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                flag = false;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+            return flag;
+        }
     }
 }

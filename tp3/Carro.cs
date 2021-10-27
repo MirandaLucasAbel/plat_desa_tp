@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using dao;
+using Slc_Mercado;
 
 namespace tp1
 
@@ -10,39 +11,57 @@ namespace tp1
     public class Carro
     {
         public int id { get; set; }
-        public Dictionary<Producto, int> productos { get; set; }
+        public Dictionary<int, int> productos { get; set; }
 
         public Carro() {
             this.id = id;
-            this.productos = new Dictionary<Producto, int>();
+            this.productos = new Dictionary<int, int>();
         }
         public Carro(int id) {
             this.id = id;
-            this.productos = new Dictionary<Producto, int>();
+            this.productos = new Dictionary<int, int>();
         }
 
-        public bool agregarProducto(Producto producto, int cantidad) {
-            
-            if ( this.productos.ContainsKey(producto))
+        public bool agregarProducto(int id_usuario,int id_producto, int cantidad) {
+            CarroDAO1 dao = new CarroDAO1();
+            if ( this.productos.ContainsKey(id_producto))
             {
-                this.productos[producto] = this.productos[producto] + cantidad;
+                this.productos[id_producto] = this.productos[id_producto] + cantidad;
+              
+                dao.update(id_usuario, id_producto, cantidad);
             }
             else
             {
-                productos.Add(producto, cantidad);
+                productos.Add(id_producto, cantidad);
+                dao.insert(id_usuario, id_producto, cantidad);
             }
             return true;
         }
-        public bool sacarProductos(Producto producto, int cantidad) {
-            if (productos.ContainsKey(producto))
+
+        internal double calcularTotal()
+        {
+            double total = 0;
+            foreach (KeyValuePair<int, int> prod in productos)
             {
-                if (productos[producto] <= cantidad)
+                ProductoDAO1 dao = new ProductoDAO1();
+                Producto prodAux = dao.get(prod.Key);
+                total += (prodAux.precio * prod.Value);
+            }
+
+            return total;
+        }
+
+        public bool sacarProductos(int id_producto, int cantidad) {
+            if (productos.ContainsKey(id_producto))
+            {
+                if (productos[id_producto] <= cantidad)
                 {
-                    productos.Remove(producto);
+                    productos.Remove(id_producto);
+                    //llamar al dao
                 }
                 else
                 {
-                    productos[producto] -= cantidad;
+                    productos[id_producto] -= cantidad;
                 }
                 return true;
             }
@@ -65,52 +84,12 @@ namespace tp1
             }
             return false;*/
         }
-
-        private Producto buscarProducto(Producto producto)
-        {
-            if (productos.ContainsKey(producto))
-            {
-                return producto;
-            }
-            return null;
-
-
-
-            /*foreach (KeyValuePair<Producto, int> prod in productos)
-            {
-                if (prod.Key == producto)
-                {
-                    return prod.Key;
-                }
-            }
-            return null;*/
-
-        }
-        public void mostrarTodosLosProductos()
-        {
-            foreach (KeyValuePair<Producto, int> prod in productos)
-            {
-                prod.Key.ToString();
-            }
-        }
-
-        internal double calcularTotal()
-        {
-            double total = 0;
-            foreach (KeyValuePair<Producto, int> prod in productos)
-            {
-                total += (prod.Key.precio * prod.Value);
-            }
-
-            return total;
-        }
-
         internal int cantidadArticulos()
         {
             int cant = 0;
-            foreach (KeyValuePair<Producto, int> prod in productos)
+            foreach (KeyValuePair<int, int> prod in productos)
             {
-                cant +=  prod.Value;
+                cant += prod.Value;
             }
 
             return cant;
@@ -120,14 +99,57 @@ namespace tp1
         {
             //return "Carro: " + this.id + " - " + this.productos.ToString();
             string aux = "";
-            foreach (KeyValuePair<Producto, int> prod in productos)
+            foreach (KeyValuePair<int, int> prod in productos)
             {
-                aux += prod.Key.nombre + " " + prod.Value.ToString() + "u * $" + prod.Key.precio.ToString() + "\n";
+                ProductoDAO1 dao = new ProductoDAO1();
+                Producto prodAux = dao.get(prod.Key);
+                aux += prodAux.nombre + " " + prod.Value.ToString() + "u * $" + prodAux.precio + "\n";
             }
             aux += "Total a pagar: ";
             aux += calcularTotal().ToString();
 
             return aux;
         }
+
+        /*
+        private Producto buscarProducto(int id_producto)
+        {
+            if (productos.ContainsKey(id_producto))
+            {
+                return id_producto;
+            }
+            return null;
+
+        */
+
+        /*foreach (KeyValuePair<Producto, int> prod in productos)
+        {
+            if (prod.Key == producto)
+            {
+                return prod.Key;
+            }
+        }
+        return null;*/
+
     }
-}
+
+    /*
+        public void mostrarTodosLosProductos()
+        {
+            foreach (KeyValuePair<int, int> prod in productos)
+            {
+                prod.Key.ToString();
+            }
+        }
+    */
+
+
+   
+ 
+    
+    
+       
+    
+    }
+    
+

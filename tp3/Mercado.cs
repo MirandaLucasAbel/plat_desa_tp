@@ -320,7 +320,7 @@ namespace tp1
             try
             {
                 if (getProductoById(id_Producto).cantidad >= cantidad) { 
-                usuario.MiCarro.agregarProducto(getProductoById(id_Producto), cantidad);
+                usuario.MiCarro.agregarProducto(id_Usuario, id_Producto, cantidad);
                 } else
                 {
                     flag = false;
@@ -341,27 +341,8 @@ namespace tp1
             
             public bool quitarDelCarro (int id_Producto, int cantidad, int id_Usuario){
             bool flag = false;
-            for (var i = 0; i < usuarios.Count(); i++)
-            {
-                if (usuarios[i].id == id_Usuario)
-                {
-                    for (var a = 0; a < productos.Count(); a++)
-                    {
-                        if (productos[a].id == id_Producto)
-                        {
-                            usuarios[i].MiCarro.sacarProductos(productos[a], cantidad);
-                            flag = true;
-                            break;
-                        }
-                    }
-                }
-                if (flag == true)
-                {
 
-                    break;
-                }
-
-            }
+            carroDao.deleteProducto(id_Usuario, id_Producto);
 
             return flag;
         }
