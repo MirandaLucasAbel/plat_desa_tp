@@ -59,7 +59,7 @@ namespace tp1
             return this.productoDao.getActivos();
         }
 
-        internal List<Compra> getCompras()
+        internal List<List<string>> getCompras()
         {
             return this.compradao.getAll();
         }
@@ -388,8 +388,7 @@ namespace tp1
             return flag;
             }
           
-        
-        
+
             public bool comprar(int id_Usuario){
 
 
@@ -460,21 +459,7 @@ namespace tp1
 
         
         public bool eliminarCompra (int id){
-            bool flag = false;
-            List<List<string>> comprasText = CompraDAO.getAllText();
-            int index = 0;
-            foreach(List<string> lista in comprasText)
-            {
-                if(lista[0] == id.ToString())
-                {
-                    comprasText.RemoveAt(index);
-                    //compras.RemoveAt(index);
-                    flag = true;
-                    CompraDAO.saveAllText1(comprasText);
-
-                }
-                index++;
-            }
+            bool flag = compradao.delete(id);
             return flag;
 
             }

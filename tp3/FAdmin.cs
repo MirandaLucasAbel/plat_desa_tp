@@ -21,7 +21,7 @@ namespace Slc_Mercado
         public List<Producto> productos;
         public List<Categoria> categorias;
         public List<Usuario> usuarios;
-        public List<Compra> compras;
+        public List<List<string>> compras;
 
         public Mercado mercado;
 
@@ -150,11 +150,14 @@ namespace Slc_Mercado
             {
                 columnas.Clear();
                 columnas.Add("ID");
-                columnas.Add("info");
+                columnas.Add("id_usuario");
+                columnas.Add("producto");
+                columnas.Add("cantidad");
+                columnas.Add("total");
 
-                foreach(Compra compra in compras)
+                foreach (List<string> compra in compras)
                 {
-                   // datos.Add(lista); //revisar
+                    datos.Add(compra); 
                 }
             }
         }
