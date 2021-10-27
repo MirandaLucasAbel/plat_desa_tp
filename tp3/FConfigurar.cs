@@ -39,7 +39,7 @@ namespace Slc_Mercado
             {
                 string folderName = ofd.SelectedPath;
                 ruta.Text = folderName;
-                LocalFileManager.userpath = folderName;
+               // LocalFileManager.userpath = folderName;
             }
 
         }

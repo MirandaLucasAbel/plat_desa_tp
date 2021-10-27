@@ -11,7 +11,7 @@ namespace Slc_Mercado
 {
     class CarroDAO1 : DataBaseConfig
     {
-        static string fileName = Path.Combine(LocalFileManager.userpath, "Carro.json");
+        
         private string tabla = "carro";
 
         public CarroDAO1()
