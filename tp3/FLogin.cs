@@ -35,17 +35,18 @@ namespace Slc_Mercado
 
         
                 int dni_;
+            bool loginOK = false;
                 bool dniOK = Int32.TryParse(dni.Text, out dni_);
             
                 if (dniOK &&  pass.Text!="")
                 {
-                 mercado.iniciarSesion1(dni_, pass.Text);
+                loginOK =  mercado.iniciarSesion1(dni_, pass.Text);
                 //encontron al usuario
 
                 }
             
 
-            if (mercado.getUsuario()!=null)
+            if (loginOK && mercado.getUsuario().nombre!= null && mercado.getUsuario()!=null)
             {
                 this.TrasfEvento(mercado);
                 this.Close();
