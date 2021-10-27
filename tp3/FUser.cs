@@ -150,7 +150,7 @@ namespace Slc_Mercado
             {
                 int id_producto;
 
-                int idUsuario = 0; // aca deberia ir el usuario
+                int idUsuario = mercado.getUsuario().id;
                 int cantidadProd;
 
                 int.TryParse(dataGridView2.Rows[0].Cells[0].Value.ToString(), out id_producto);

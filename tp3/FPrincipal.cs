@@ -41,7 +41,7 @@ namespace Slc_Mercado
                 MessageBox.Show("Log-in correcto, Usuario: " + mercado.getUsuario().nombre);
                 hijoLogin.Close();
 
-                if (mercado.esAdmin())
+                if (mercado.getUsuario().nombre !=null && mercado.esAdmin())
                 {
                     hijoMain = new FAdmin(mercado);
                     hijoMain.MdiParent = this;

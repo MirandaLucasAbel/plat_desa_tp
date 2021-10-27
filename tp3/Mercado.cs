@@ -476,7 +476,7 @@ namespace tp1
         {
             UsuarioDAO1 usuarioDao = new UsuarioDAO1();
             this.usuario = usuarioDao.getUsuarioByDni(dni, pass);
-            if (this.usuario != null)
+            if (this.usuario != null && this.usuario.nombre!=null)
             {
                if(esAdmin()) this.carro = new Carro(); //si no es admin no necesito iniciar un carrito
                 return true;

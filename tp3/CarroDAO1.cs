@@ -112,7 +112,6 @@ namespace Slc_Mercado
 
             try
             {
-
                 string sql = $"use [ecommerce-plataforma];delete from carro where id_usuario = {id}";
                 SqlDataReader data = ejecutarQuery(sql);
 
