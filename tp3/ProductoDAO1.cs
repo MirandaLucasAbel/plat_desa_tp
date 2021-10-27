@@ -12,7 +12,7 @@ namespace dao
     class ProductoDAO1 : DataBaseConfig
     {
 
-        static string fileName = Path.Combine(LocalFileManager.userpath, "Producto.json");
+        
         private string tabla = "producto";
 
         public ProductoDAO1()

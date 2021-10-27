@@ -32,11 +32,8 @@ namespace tp1
 
         public Mercado()
             {
-            /*no es necesario iniciar esto*/
-            this.productos = ProductoDAO.getAll();
-            this.categorias = CategoriaDAO.getAll();
-            this.usuarios = UsuarioDAO.getAll();
-            this.compras = new List<Compra>();
+       
+          
 
             /*daos*/
              this.categoriaDao = new CategoriaDAO1();
@@ -423,18 +420,7 @@ namespace tp1
         
         public bool modificarCompra ( int id, double total){
             bool flag = false;
-           // compras = CompraDAO.getAllText();
-            for (var i = 0; i < compras.Count(); i++)
-            {
-                if (compras[i].id == id) {
-                    compras[i].total = total;
-                    flag = true;
-                    CompraDAO.saveAll(compras);
-                    break;
-                }
-            
-            
-            }
+          //no se pueden modifcar las compras
             return flag;
             }
 
