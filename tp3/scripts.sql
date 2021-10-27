@@ -115,7 +115,7 @@ GO
 
 USE [master]
 GO
-/****** Object:  Database [ecommerce-plataforma]    Script Date: 24/10/2021 12:49:04 ******/
+/****** Object:  Database [ecommerce-plataforma]    Script Date: 26/10/2021 21:39:59 ******/
 CREATE DATABASE [ecommerce-plataforma]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -195,7 +195,7 @@ ALTER DATABASE [ecommerce-plataforma] SET QUERY_STORE = OFF
 GO
 USE [ecommerce-plataforma]
 GO
-/****** Object:  Table [dbo].[carro]    Script Date: 24/10/2021 12:49:04 ******/
+/****** Object:  Table [dbo].[carro]    Script Date: 26/10/2021 21:39:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -211,7 +211,7 @@ CREATE TABLE [dbo].[carro](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[categorias]    Script Date: 24/10/2021 12:49:04 ******/
+/****** Object:  Table [dbo].[categorias]    Script Date: 26/10/2021 21:39:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -225,7 +225,7 @@ CREATE TABLE [dbo].[categorias](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[compra]    Script Date: 24/10/2021 12:49:04 ******/
+/****** Object:  Table [dbo].[compra]    Script Date: 26/10/2021 21:39:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -242,7 +242,7 @@ CREATE TABLE [dbo].[compra](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[producto]    Script Date: 24/10/2021 12:49:04 ******/
+/****** Object:  Table [dbo].[producto]    Script Date: 26/10/2021 21:39:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -259,7 +259,7 @@ CREATE TABLE [dbo].[producto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[usuarios]    Script Date: 24/10/2021 12:49:04 ******/
+/****** Object:  Table [dbo].[usuarios]    Script Date: 26/10/2021 21:39:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -271,7 +271,7 @@ CREATE TABLE [dbo].[usuarios](
 	[dni] [int] NOT NULL,
 	[mail] [nchar](30) NOT NULL,
 	[password] [nchar](30) NOT NULL,
-	[tipo] [nchar](10) NOT NULL,
+	[tipo] [nchar](30) NOT NULL,
 	[cuil] [nchar](15) NOT NULL
 ) ON [PRIMARY]
 GO
@@ -279,5 +279,3 @@ USE [master]
 GO
 ALTER DATABASE [ecommerce-plataforma] SET  READ_WRITE 
 GO
-
-
