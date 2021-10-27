@@ -15,9 +15,10 @@ namespace Slc_Mercado
 {
     public partial class FRegistro : Form
     {
-        public FRegistro()
+        private Mercado mercado;
+        public FRegistro(Mercado mercado)
         {
-            
+            this.mercado = mercado;
             InitializeComponent();
    
         }
@@ -51,8 +52,9 @@ namespace Slc_Mercado
             if (validar())
             {
 
-                UsuarioDAO1 dao = new UsuarioDAO1();
-                dao.insert(nombre, apellido, password, dni, mail, tipoUsuario.SelectedItem.ToString(), cuit.Text);
+                
+                mercado.agregarUsuario(dni, nombre, apellido, password, mail, tipoUsuario.SelectedItem.ToString(), cuit.Text);
+                
             }
            
             else return;

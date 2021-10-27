@@ -23,7 +23,7 @@ namespace Slc_Mercado
         public FUser(Mercado mercado)
         {
 
-            productos = new ProductoDAO1().getAll();
+            productos = mercado.getProductos(); //new ProductoDAO1().getAll();
             this.mercado = mercado;
             InitializeComponent();
             //argumentos = args;   VERIFICAR

@@ -19,6 +19,7 @@ namespace Slc_Mercado
         private Usuario usuario;
         public delegate void TransfDelegado(Mercado mercado);
         public TransfDelegado TrasfEvento;
+        private Mercado mercado = new Mercado();
         public FLogin(string[] args)
         {
             logued = false;
@@ -30,7 +31,7 @@ namespace Slc_Mercado
 
 
            
-            Mercado mercado = new Mercado();
+            
 
 
         
