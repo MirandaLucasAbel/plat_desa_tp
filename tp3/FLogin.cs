@@ -65,7 +65,7 @@ namespace Slc_Mercado
         private void registro_Click(object sender, EventArgs e)
         {
             this.Close();
-            FRegistro registro = new FRegistro();
+            FRegistro registro = new FRegistro(mercado);
             registro.Show();
         }
 
