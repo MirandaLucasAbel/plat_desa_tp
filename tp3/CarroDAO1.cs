@@ -129,7 +129,7 @@ namespace Slc_Mercado
             return flag;
         }
 
-        internal void deleteProducto(object id_usuario, object id_producto)
+        internal bool deleteProducto(object id_usuario, object id_producto)
         {
             bool flag = true;
 
