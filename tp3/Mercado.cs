@@ -42,7 +42,7 @@ namespace tp1
             this.productoDao = new ProductoDAO1();
             
 
-            foreach (Usuario us in usuarios) us.MiCarro = new Carro();
+            //foreach (Usuario us in usuarios) us.MiCarro = new Carro();
 
         }
 
